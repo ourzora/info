@@ -4,7 +4,7 @@ import { HttpLink } from 'apollo-link-http'
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/uniswap-v2-zora-network/1.0.0/gn'
+    uri: 'https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/uniswap-v2-zora-network/stable/gn'
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -12,7 +12,7 @@ export const client = new ApolloClient({
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/uniswap-v2-zora-network/1.0.0/gn',
+    uri: 'https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/uniswap-v2-zora-network/stable/gn',
   }),
   cache: new InMemoryCache(),
 })
