@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback, useState, useEffect } from 'react'
 import { timeframeOptions, SUPPORTED_LIST_URLS__NO_ENS } from '../constants'
+import { JsonRpcProvider } from 'ethers/providers'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import getTokenList from '../utils/tokenLists'
@@ -174,16 +175,19 @@ export function useLatestBlocks() {
 
   useEffect(() => {
     async function fetch() {
+      const provider = new JsonRpcProvider('https://rpc.zora.energy')
+      const currentBlockNumber = await provider.getBlockNumber()
+
       healthClient
         .query({
           query: SUBGRAPH_HEALTH,
         })
         .then((res) => {
-          const syncedBlock = res.data.indexingStatusForCurrentVersion.chains[0].latestBlock.number
-          const headBlock = res.data.indexingStatusForCurrentVersion.chains[0].chainHeadBlock.number
-          if (syncedBlock && headBlock) {
+          const syncedBlock = res.data._meta.block.number
+
+          if (syncedBlock && currentBlockNumber) {
             updateLatestBlock(syncedBlock)
-            updateHeadBlock(headBlock)
+            updateHeadBlock(currentBlockNumber)
           }
         })
         .catch((e) => {
